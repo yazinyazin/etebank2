@@ -1,0 +1,55 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.2'
+	id 'io.spring.dependency-management' version '1.1.4'
+	id "org.springdoc.openapi-gradle-plugin" version "1.8.0"
+}
+
+group = 'net.yazin'
+version = '1.0'
+
+
+java {
+	sourceCompatibility = '17'
+}
+
+ext {
+	mapstructVersion = "1.6.0.Beta1"
+	lombokVersion = "1.18.30"
+	lombokMapstructBindingVersion = "0.2.0"
+}
+
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation 'org.springframework.boot:spring-boot-docker-compose'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	implementation "org.mapstruct:mapstruct:${mapstructVersion}", "org.projectlombok:lombok:${lombokVersion}"
+	annotationProcessor 'org.hibernate:hibernate-jpamodelgen:6.1.7.Final',"org.mapstruct:mapstruct-processor:${mapstructVersion}", "org.projectlombok:lombok:${lombokVersion}", "org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}"
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+}
+
+//openApi {
+	//apiDocsUrl.set("http://localhost:8080/api/v1/v3/api-docs")
+//}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
